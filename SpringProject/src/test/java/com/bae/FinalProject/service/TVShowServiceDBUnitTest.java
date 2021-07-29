@@ -50,17 +50,28 @@ public class TVShowServiceDBUnitTest {
 	}
 	
 	@Test
-	void testDelete() {
-		
+	void testDeletePass() {
 		int id = 1;
-		
-		Mockito.when(this.repo.existsById(id)).thenReturn(true);
-		
+
+		Mockito.when(this.repo.existsById(id)).thenReturn(false);
+
 		assertThat(this.service.deleteTVShow(id)).isEqualTo("Deleted: " + id);
-		
-		Mockito.verify(this.repo, Mockito.times(1)).deleteById(id);
-	
+
+		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
 	}
+
+	@Test
+	void testDeleteFails() {
+		int id = 1;
+
+		Mockito.when(this.repo.existsById(id)).thenReturn(true);
+
+		assertThat(this.service.deleteTVShow(id)).isEqualTo("Not deleted: " + id);
+
+		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+	}
+
+
 	
 	@Test
 	void testCreate() {

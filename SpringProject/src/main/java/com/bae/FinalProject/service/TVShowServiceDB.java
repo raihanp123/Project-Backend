@@ -72,8 +72,19 @@ public class TVShowServiceDB implements TVShowService{
 	public String deleteTVShow(int id) {
 		this.repo.deleteById(id);
 
-		return "Deleted: " + id;  // print following if ID is deleted
+		
+		if (this.repo.existsById(id)) {
+			
+			return "Not deleted: " + id;
+		} 
+		else {
+		
+			return "Deleted: " + id;  // print following if ID is deleted
 	}
+	
+	}
+	
+	
 	
 	
 	public List<TVShow> findByName(String name) {
